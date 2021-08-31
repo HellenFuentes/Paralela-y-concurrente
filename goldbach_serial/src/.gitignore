@@ -1,0 +1,4 @@
+exe_asan
+exe_msan
+exe_tsan
+exe

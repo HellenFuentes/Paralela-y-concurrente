@@ -1,0 +1,7 @@
+html
+latex
+doc
+.vscode/
+test/
+bin/
+build/

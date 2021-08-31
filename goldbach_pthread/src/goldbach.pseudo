@@ -1,0 +1,104 @@
+struct number_t:
+  bool positive;
+  bool even;
+  bool notValid;
+  int64_t number;
+  int64_t sumsAmount;
+  int64_t *sums;
+  int64_t actualSize;
+  int64_t numberAmount;
+
+struct shared_data_t:
+  number_t *numbers;
+  size_t used;
+  size_t size;
+
+
+private private_data_t:
+  shared_data_t * sharedData;
+  int64_t actualSize;
+  int64_t workAssigned;
+  int64_t *work;
+
+main(argc, argv[]):
+  if (threads && private_data)
+    if argc =: 2
+      if argv != 1
+        print "error"
+  run_goldbach()
+  else 
+    print "error"
+  
+void* goldbach (void* data)
+  private_data priv =: (private) data;
+  shared_data shar = priv->sharedData; 
+  for index =: 0 to  priv->workAssigned do
+    indexWork = priv->work[index];
+    my_number = sha->numbers[indexWork];
+    verify_number()
+    if even
+      goldbach_even
+    else
+        goldbach_odd 
+  end
+
+  void run_goldbach
+  int64_t number =: 0ll
+  FILE* input =: stdin
+  int index =: 0
+  int tamanio =: 1
+  int numberThreads =: sysconf(_SC_NPROCESSORS_ONLN)
+
+  shared_data array = array->numbers
+
+  while (fscanf(input) == 1) do
+    ++tamanio;
+    number_t expandido = (number_t*) realloc(a->numbers,tamanio)
+    array->numbers =: expandido;
+    array->numbers[index].number =: number;
+    array->numbers[index].actualSize =: EXPANDED
+    array->numbers[index].even =: false;
+    array->numbers[index].notValid =: false;
+    array->numbers[index].positive =: false;
+    array->numbers[index].sumsAmount =: 0;
+    array->numbers[index].numberAmount =: 0;
+    ++index;
+  end
+
+  for (counter =: 0 to counter<index ) do 
+    for (counter2 =: 0 to counter2 < numberThreads) do
+      if (workAssigned != index)
+        int64 work private_data[i].work++; 
+        if (private_data[i].workAssigned == (private_data[i].actualSize-1))
+          work = incrementArray()
+          private_data[i].actualSize = private_data[i].actualSize + EXPAND_SIZE;
+        work[private_data[i].workAssigned]=workAsign;
+        ++private_data[i].workAssigned;
+        ++workAsign;
+    end
+  end
+
+  for (index =: 0 to numberThreads) do 
+    private_data[index].sharedData = array;
+      if (pthread_create(&threads[index]=success){
+        EXIT_SUCCESS
+      }
+      else{
+        EXIT_FAILURE;
+  end
+
+  for (index =: 0 to numberThreads) 
+    pthread_join(threads[index]);
+  for (counter =: 0 to numberThreads) 
+      pthread_join(threads[index])
+  for (counter =: 0 to index)
+      printN( array->numbers[i])
+      free(threads);
+  for (counter =: 0 to index 
+      free(array->numbers[i].sums);
+  for (counter =: 0 to numberThreads)
+      free(private_data[i].work)
+  
+  free(private_data);
+  free(array->numbers);
+  free(array);

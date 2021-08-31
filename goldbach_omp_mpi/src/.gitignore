@@ -1,0 +1,7 @@
+goldbach_optimization_asan
+goldbach_optimization_msan
+goldbach_optimization_tsan
+goldbach_optimization_ubsan
+goldbach_optimization
+.vscode
+.vscode/

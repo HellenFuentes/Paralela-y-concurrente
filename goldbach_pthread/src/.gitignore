@@ -1,0 +1,6 @@
+goldbach_pthread_asan
+goldbach_pthread_msan
+goldbach_pthread_tsan
+goldbach_pthread_ubsan
+goldbach_pthread
+.vscode/
