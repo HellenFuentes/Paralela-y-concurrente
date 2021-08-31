@@ -1,0 +1,175 @@
+int main(){
+    nombre = argv[1];
+    ruta = argv[2];
+    Controlador::iniciar(nombre,ruta);
+}
+class Controlador{
+    private:
+    vector<Trabajo> trabajos;
+    iniciar(nombre,ruta){
+        // Obtiene los mapas del job y los procesa en Trabajos
+        Generador::obtenerIslas(nombre,ruta,trabajos);
+        // Crea el directorio Salidas un nivel arriba de la carpeta donde se encuentre
+        crearDirectorio();
+        for(i=0 ;i<trabajos.size();i++){
+            // obtiene los datos y llena la matriz de un Mapa con la informacion en Trabajo y la ruta
+            MapaMagico *nuevo = Generador::obtenerMapa(trabajos[i],ruta);
+            EspejoMagico::verDestino(nuevo);
+            liberarMemoria();
+        }
+    }
+    crearDirectorio(){
+        mkdir(DIRECTORIO_SALIDA, 0777);
+    }
+    liberarMemoria(MapaMagico *borrar){
+        delete borrar;
+    }
+    
+}
+
+class Generador{
+    obtenerIslas(nombre,ruta,trabajos){
+        Lector::lectorTrabajo(nombre,ruta,trabajos);
+    }
+    obtenerMapa(Trabajo obtener,ruta){
+        MapaMagico *nuevo = new;
+        Lector::obtenerMapa(nuevo,ruta);
+    }
+
+}
+
+class Lector{
+    lectorTrabajo(nombre,ruta,trabajos){
+        Archivo(ruta); // Abre el archivo de la ruta
+        while(getline(Archivo)){
+            Trabajo trabajo;
+            .
+            . // Asignarle los campos
+            .
+            trabajos.pushback(trabajo);
+        }   // Obtiene lineas
+    }
+    // Fin primera Fase obtener nombre de todos los mapas y midnights
+    obtenerMapa(llenarMapa,ruta){
+        archivo(ruta+llenarMapa.nombre); // Abre el archivo de la ruta
+        leer desde la ruta;
+        string linea;
+        asignarDImensiones(llenarMapa);
+        while(getline(archivo,linea)){
+        #pragma omp parallel for num_threads(8) default (none)
+            for (j = 0; j < llenarMapa[0].size(); j++) {
+                mapaMagico->mapa[contLineas][j] = linea[j];
+            }
+        }   // Obtiene lineas
+        // Fin Segunda Fase llenar un mapa 
+    }
+}
+class EspejoMagico{
+    verDestino(MapaMagico *predecir){
+        evaluarIsla(predecir);
+    }
+    evaluarIsla(MapaMagico* isla) {
+        // Manda al respectivo archivo de texto a imprimir la matriz original
+        isla->procesarMapaActual();
+        // Si en la isla solo se quiere ver el resultado final
+        if (isla->numeroIteraciones < 0) {
+          isla->numeroIteraciones = isla->numeroIteraciones*(-1);
+          for (futuro = 0; futuro < isla->numeroIteraciones; futuro++) {
+            visor.revisarMapa(isla);
+            if (futuro == isla->numeroIteraciones-1) {
+              isla->procesarMapaActual();
+            }
+          }
+        } else {
+          // Si se quiere observar todo los procedimientos paso a paso
+          for (futuro = 0; futuro < isla->numeroIteraciones; futuro++) {
+            visor.revisarMapa(isla);
+            isla->procesarMapaActual();
+          }
+        }
+        oraculo.ecribirSalida(isla);
+        isla->liberarMemoria();
+    }
+      
+}
+
+class VisorFuturo{
+    void VisorFuturo::revisarMapa(MapaMagico* mapa) {
+        this->copia = alistarCopia(mapa->mapa);
+        #pragma omp parallel for num_threads(8) shared(mapa, copia) schedule(static)
+        for (f = 0; f < mapa->mapa.size(); f++) {
+          for (c = 0; c < mapa->mapa[0].size(); c++) {
+            evaluarReglas(f, c, mapa);
+          }
+        }
+        ++mapa->numeroActual;
+      }
+      
+      //Evalua las reglas del mago
+    void VisorFuturo::evaluarReglas(int f, int c, MapaMagico* mapa) {
+        if (copia[f][c] == ARBOL) {
+          evaluarInundacion(f, c, mapa);
+          evaluarHacimiento(f, c, mapa);
+        } else {
+          if (copia[f][c] == LAGO) {
+            evaluarSequia(f, c, mapa);
+          } else {
+            if (copia[f][c] == PRADERA) {
+              evaluarReforestacion(f, c, mapa);
+            }
+          }
+        }
+    }
+    // Cada una de las reglas manda a llamar esta sub rutina
+    bool VisorFuturo::examinarCelda(int f, int c, char encontrar, int cuantos) {
+        int encontrados = 0;
+        bool parar = false;
+        for (fila = f-1; fila <= f+1 && (!parar); fila++) {
+          if (verificarPosicion(fila, 0)) {
+            for ( columna = c-1; columna<= c+1 && (!parar) ; columna++) {
+              if (verificarPosicion(0, columna) && (f != fila || c != columna)) {
+                  // Compara contra la matriz original
+                if (this->copia[fila][columna] == encontrar) {
+                  ++encontrados;
+                  if (encontrados == cuantos) {
+                    parar = true;
+                  }
+                }
+              }
+            }
+          }
+        }
+        return parar;
+    }
+}
+class Oraculo{
+    ecribirSalida(MapaMagico *mapa){
+        // Abre el archivo al final 
+        Archivo(mapa->nombre,  std::ios::app);
+        archivo << mapa->numeroActual;
+        archivo << ":\n";
+        // Escribe en el archivo la matriz del mapa;
+        for (f = 0; f< mapa->mapa.size(); f++) {
+            for (c = 0; c< mapa->mapa[0].size(); c++) {
+                archivo<< mapa->mapa[f][c];
+            }
+            archivo<< "\n";
+        }
+        archivo<< "\n";
+        archivo.close();
+    }
+
+}
+class MapaMagico{
+    public:
+    int numeroIteraciones;
+    int numeroActual;
+    std::string miNombre;
+    vector<vector<char>> mapa;
+}
+
+class Trabajo{
+    private:
+    midnights;
+    nombreMapa;
+}

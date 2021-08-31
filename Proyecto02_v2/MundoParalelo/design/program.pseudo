@@ -1,0 +1,57 @@
+int main():
+    nombre;
+    ruta;
+    numThreads;
+    iniciar(nombre,ruta,numThreads);
+
+iniciar(nombre, ruta, numThreads):
+    vector<Trabajo> trabajos;
+    Generador::obtenerIslas(nombre,ruta,trabajos,numThreads);
+    crearDirectorio();
+    if (MPI_Init() == MPI_SUCCESS) {
+        int my_rank = MPI_Comm_rank();
+        //Si soy el proceso 0 entonces reparto trabajos(productor)
+        if (my_rank == 0){ 
+          repartirTrabajo();
+          }
+        else{ 
+        //Si soy cualquiera de los otros procesos entonces pido trabajos (consumidor)
+          aceptarTrabajo();
+          }
+        MPI_Finalize();
+      }
+
+repartirTrabajo():
+  while (trabajoRepartido < trabajos.size()) {
+  // Solicitud de un trabajador (quiere un trabajo)
+  MPI_Recv(&trabajador, 1, MPI_INT, MPI_ANY_SOURCE, 0, MPI_COMM_WORLD,
+             MPI_STATUS_IGNORE);
+  // Le doy trabajo
+    MPI_Send(&trabajoRepartido, 1, MPI_INT, trabajador, 0, MPI_COMM_WORLD);
+    trabajoRepartido++;
+  }
+
+  MPI_Send(StopCondition);
+  EsperarConsumidores;
+
+aceptarTrabajo():
+    // Envio la señal de que estoy ocioso y necesito trabajo
+    MPI_Send(&my_rank, 1, MPI_INT, 0, 0, MPI_COMM_WORLD);
+    // Recibo el trabajo o la condicion de parada
+    MPI_Recv(&posicionTrabajo, 1, MPI_INT, 0, 0, MPI_COMM_WORLD,
+             MPI_STATUS_IGNORE);
+    if (posicionTrabajo != STOP_CONDITION) {
+      EspejoMagico clarividente(islaActual, this->numThreads);
+      clarividente.verDestino(islaTrabajo);
+    }
+
+verDestino(islaTrabajo):
+    revisarMapa(islaTrabajo);
+
+revisarMapa(islaTrabajo):
+    #pragma omp parallel for num_threads(numThreads) shared(mapa) schedule(static) collapse(2)
+    for (f = 0; f < mapa.size(); f++) {
+        for (c = 0; c < mapa[0].size(); c++) {
+          evaluarReglas(f, c, mapa);
+        }
+    }
